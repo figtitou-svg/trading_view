@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trading Dashboard — Forex</title>
+
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Styles (le ?v= force le navigateur à recharger après une mise à jour) -->
+    <link rel="stylesheet" href="/dashboard/styles.css?v=20260727a">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <span class="logo-icon">✨</span>
+                <h2>Antigravity<br>Trading</h2>
+            </div>
+            <nav>
+                <a href="#" class="nav-link active" data-page="forex">💱 Forex</a>
+                <a href="#" class="nav-link" data-page="copytrading">📋 Copy Trading</a>
+                <a href="#" class="nav-link" data-page="settings">⚙️ Paramètres</a>
+            </nav>
+
+            <div class="status-card">
+                <div class="status-indicator"></div>
+                <div>
+                    <p class="status-title">Paper Trading</p>
+                    <p class="status-subtitle">100 % simulé</p>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+
+            <!-- ════════ PAGE: FOREX ════════ -->
+            <div id="page-forex">
+
+                <!-- ─── Accueil : stats globales + bots + widgets condensés ─── -->
+                <div id="forex-home">
+                    <header>
+                        <div class="header-info">
+                            <h1>💱 Forex — Paper trading multi-signaux</h1>
+                            <p class="date">Confluence technique + macro · 100 % simulé</p>
+                        </div>
+                        <div class="total-balance-wrapper">
+                            <h2 class="total-balance" id="forex-equity">-- €</h2>
+                            <p class="pnl-indicator" id="forex-pnl">-- € (--%)</p>
+                            <p class="date" id="forex-invested">sur 10 000 € investis</p>
+                            <span id="forex-runner-status" class="watcher-badge">⏳ connexion...</span>
+                        </div>
+                    </header>
+
+                    <section class="glass-panel" style="margin-bottom:24px;">
+                        <div class="chart-header"><h3>🤖 Mes bots</h3></div>
+                        <div class="bot-cards" id="forex-bots">
+                            <p style="color:#8e8e93">En attente du runner forex...</p>
+                        </div>
+                    </section>
+
+                    <div class="bottom-grid">
+                        <section class="assets-section glass-panel">
+                            <div class="chart-header">
+                                <h3>📅 Prochaines annonces</h3>
+                                <a href="#calendar" class="see-all-link">Voir tout →</a>
+                            </div>
+                            <div class="assets-list" id="forex-calendar-widget">
+                                <p style="color:#8e8e93">Chargement du calendrier...</p>
+                            </div>
+                        </section>
+                        <section class="assets-section glass-panel">
+                            <div class="chart-header">
+                                <h3>🌍 Biais macro (top 3)</h3>
+                                <a href="#macro" class="see-all-link">Voir tout →</a>
+                            </div>
+                            <div class="assets-list" id="forex-macro-widget">
+                                <p style="color:#8e8e93">Chargement des données macro...</p>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+
+                <!-- ─── Détail d'un bot ─── -->
+                <div id="forex-bot-detail" style="display:none;">
+                    <a href="#forex" class="back-link">← Retour</a>
+                    <header>
+                        <div class="header-info">
+                            <h1 id="bot-detail-name">—</h1>
+                            <p class="date" id="bot-detail-return">--</p>
+                        </div>
+                    </header>
+
+                    <section class="glass-panel" style="margin-bottom:24px;">
+                        <div class="chart-header"><h3>📡 Signaux en direct</h3></div>
+                        <div class="detections-list" id="bot-signals">
+                            <p style="color:#8e8e93">En attente du runner forex...</p>
+                        </div>
+                    </section>
+
+                    <section class="glass-panel" style="margin-bottom:24px;">
+                        <div class="chart-header"><h3>💼 Positions ouvertes</h3></div>
+                        <div class="detections-list" id="bot-positions">
+                            <p style="color:#8e8e93">Aucune position ouverte.</p>
+                        </div>
+                    </section>
+
+                    <section class="glass-panel trades-section" style="margin-bottom:24px;">
+                        <h3>📜 5 derniers trades</h3>
+                        <div class="trades-list" id="bot-last-trades">
+                            <p style="color:#8e8e93">Aucun trade pour le moment.</p>
+                        </div>
+                    </section>
+
+                    <section class="glass-panel" style="margin-bottom:24px;">
+                        <div class="chart-header"><h3>🧭 Stratégie</h3></div>
+                        <p id="bot-strategy-summary" style="color:#e0e0e0; font-size:13px; line-height:1.6;"></p>
+                    </section>
+
+                    <section class="glass-panel">
+                        <div class="chart-header">
+                            <h3>🧠 Apprentissage</h3>
+                            <span id="bot-learn-summary" style="color:#8e8e93; font-size:13px;"></span>
+                        </div>
+                        <button class="clear-blocked-btn" id="bot-learn-toggle" style="margin-bottom:12px;">Détails →</button>
+                        <div id="bot-learn-detail" style="display:none;">
+                            <div id="bot-learned" style="margin-bottom:16px; padding:10px; background:rgba(255,255,255,0.03); border-radius:8px; color:#e0e0e0; font-size:13px;"></div>
+                            <div class="chart-header"><h3 style="font-size:14px;">Performance par combinaison</h3></div>
+                            <div class="detections-list" id="bot-combos">
+                                <p style="color:#8e8e93">Pas encore assez de trades pour analyser.</p>
+                            </div>
+                            <div class="chart-header" style="margin-top:16px;"><h3 style="font-size:14px;">Historique des ajustements automatiques</h3></div>
+                            <div class="detections-list" id="bot-changelog">
+                                <p style="color:#8e8e93">Aucun ajustement pour l'instant.</p>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- ─── Calendrier complet ─── -->
+                <div id="forex-calendar-page" style="display:none;">
+                    <a href="#forex" class="back-link">← Retour</a>
+                    <header>
+                        <div class="header-info">
+                            <h1>📅 Calendrier économique</h1>
+                            <p class="date">Annonces à venir, impact fort/moyen — clique une annonce pour l'explication</p>
+                        </div>
+                    </header>
+                    <section class="glass-panel">
+                        <div class="assets-list" id="forex-calendar-full">
+                            <p style="color:#8e8e93">Chargement du calendrier...</p>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- ─── Biais macro complet ─── -->
+                <div id="forex-macro-page" style="display:none;">
+                    <a href="#forex" class="back-link">← Retour</a>
+                    <header>
+                        <div class="header-info">
+                            <h1>🌍 Biais macro</h1>
+                            <p class="date">Différentiel de taux d'intérêt (Carry Trade), par paire suivie</p>
+                        </div>
+                    </header>
+                    <section class="glass-panel">
+                        <div class="assets-list" id="forex-macro-full">
+                            <p style="color:#8e8e93">Chargement des données macro...</p>
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+            <!-- ════════ PAGE: COPY TRADING ════════ -->
+            <div id="page-copytrading" style="display:none;">
+                <header>
+                    <div class="header-info">
+                        <h1>📋 Copy Trading — Miroir Hyperliquid</h1>
+                        <p class="date">Réplication virtuelle des positions des meilleurs traders du leaderboard · 100 % simulé</p>
+                    </div>
+                    <div class="total-balance-wrapper">
+                        <h2 class="total-balance" id="ct-equity">-- €</h2>
+                        <p class="pnl-indicator" id="ct-pnl">-- € (--%)</p>
+                        <p class="date" id="ct-invested">sur 10 000 € virtuels</p>
+                        <span id="ct-runner-status" class="watcher-badge">⏳ connexion...</span>
+                    </div>
+                </header>
+
+                <section class="glass-panel" style="margin-bottom:24px;">
+                    <div class="chart-header"><h3>👥 Traders copiés</h3></div>
+                    <div class="bot-cards" id="ct-followed">
+                        <p style="color:#8e8e93">Aucun trader copié — active « Copier » sur un candidat ci-dessous.</p>
+                    </div>
+                </section>
+
+                <section class="glass-panel" style="margin-bottom:24px;">
+                    <div class="chart-header">
+                        <h3>🏆 Candidats proposés</h3>
+                        <span id="ct-candidates-date" style="color:#8e8e93; font-size:12px;"></span>
+                    </div>
+                    <div class="detections-list" id="ct-candidates">
+                        <p style="color:#8e8e93">En attente du runner copy trading...</p>
+                    </div>
+                </section>
+
+                <section class="glass-panel" style="margin-bottom:24px;">
+                    <div class="chart-header"><h3>💼 Positions miroir ouvertes</h3></div>
+                    <div class="detections-list" id="ct-positions">
+                        <p style="color:#8e8e93">Aucune position miroir ouverte.</p>
+                    </div>
+                </section>
+
+                <section class="glass-panel trades-section">
+                    <h3>📜 Derniers trades du miroir</h3>
+                    <div class="trades-list" id="ct-history">
+                        <p style="color:#8e8e93">Aucun trade clôturé pour le moment.</p>
+                    </div>
+                </section>
+            </div>
+
+            <!-- ════════ PAGE: PARAMÈTRES ════════ -->
+            <div id="page-settings" style="display:none;">
+                <header>
+                    <div class="header-info">
+                        <h1>⚙️ Paramètres</h1>
+                        <p class="date">Notifications Telegram</p>
+                    </div>
+                </header>
+
+                <div class="glass-panel" style="padding:24px; max-width:520px;">
+                    <h3 style="margin-top:0;">Forex</h3>
+                    <label style="display:block; margin-bottom:10px;">
+                        <input type="radio" name="settings-forex-mode" value="detailed" id="settings-mode-detailed">
+                        Détaillé (entrées/sorties/classement individuels)
+                    </label>
+                    <label style="display:block; margin-bottom:16px;">
+                        <input type="radio" name="settings-forex-mode" value="daily_recap" id="settings-mode-recap">
+                        Récap (3x/jour : 7h30, 12h, 20h)
+                    </label>
+
+                    <div id="settings-detailed-toggles" style="margin-left:24px; margin-bottom:16px;">
+                        <label style="display:block; margin-bottom:8px;">
+                            <input type="checkbox" id="settings-entries"> Entrées
+                        </label>
+                        <label style="display:block; margin-bottom:8px;">
+                            <input type="checkbox" id="settings-exits"> Sorties
+                        </label>
+                        <label style="display:block;">
+                            <input type="checkbox" id="settings-ranking"> Classement (4x/jour)
+                        </label>
+                    </div>
+
+                    <h3>Copy Trading</h3>
+                    <label style="display:block; margin-bottom:10px;">
+                        <input type="radio" name="settings-copytrading-mode" value="detailed" id="settings-copytrading-mode-detailed">
+                        Détaillé (une notif par clôture)
+                    </label>
+                    <label style="display:block; margin-bottom:16px;">
+                        <input type="radio" name="settings-copytrading-mode" value="daily_recap" id="settings-copytrading-mode-recap">
+                        Récap quotidien (18h, un seul message par jour)
+                    </label>
+
+
+                    <button class="clear-blocked-btn" id="settings-save-btn">Enregistrer</button>
+                    <span id="settings-save-status" style="margin-left:12px; color:#8e8e93;"></span>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="/dashboard/app.js?v=20260727b"></script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+# /etc/systemd/system/trading-forex.service
+[Unit]
+Description=Bot forex — paper trading multi-signaux (100% simulé, notifications Telegram)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=__USER__
+WorkingDirectory=__DIR__
+ExecStart=__DIR__/.venv/bin/python -u -m forex.paper.runner
+Restart=always
+RestartSec=15
+# Journaux : sudo journalctl -u trading-forex -f
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

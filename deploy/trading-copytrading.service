@@ -1,0 +1,19 @@
+# /etc/systemd/system/trading-copytrading.service
+[Unit]
+Description=Copy trading — miroir Hyperliquid (100% simulé)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=__USER__
+WorkingDirectory=__DIR__
+ExecStart=__DIR__/.venv/bin/python -u -m copytrading.runner
+Restart=always
+RestartSec=15
+# Journaux : sudo journalctl -u trading-copytrading -f
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

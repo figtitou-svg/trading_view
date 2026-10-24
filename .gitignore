@@ -1,0 +1,42 @@
+# Environnement
+.env
+.venv/
+venv/
+env/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+
+# Node
+node_modules/
+
+# Logs
+logs/
+*.log
+
+# Données locales (paper trading & état du scanner)
+portfolio.db
+scanner_state.json
+bot_settings.json
+copytrading/_cache/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Etat local / config d'outils
+.scratch_bots.json
+forex/_cache/

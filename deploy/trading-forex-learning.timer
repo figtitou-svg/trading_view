@@ -1,0 +1,13 @@
+# /etc/systemd/system/trading-forex-learning.timer
+# Déclenche le cycle d'apprentissage chaque dimanche à 18h00 UTC (marché fermé
+# jusqu'à 21h UTC → aucune interférence avec le trading).
+[Unit]
+Description=Planification hebdomadaire du cycle d'apprentissage forex
+
+[Timer]
+OnCalendar=Sun *-*-* 18:00:00 UTC
+Persistent=true
+RandomizedDelaySec=300
+
+[Install]
+WantedBy=timers.target

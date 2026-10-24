@@ -1,0 +1,17 @@
+# /etc/systemd/system/trading-forex-learning.service
+# Cycle hebdomadaire d'apprentissage forex (module 7) : analyse des combos +
+# auto-tuning walk-forward des paramètres. Déclenché par le .timer associé.
+[Unit]
+Description=Forex — cycle d'apprentissage hebdomadaire (walk-forward, garde-fous)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=__USER__
+WorkingDirectory=__DIR__
+ExecStart=__DIR__/.venv/bin/python -u -m forex.learning.loop --tune
+# Le tuning peut durer plusieurs dizaines de minutes sur la VM micro.
+TimeoutStartSec=3h
+StandardOutput=journal
+StandardError=journal
