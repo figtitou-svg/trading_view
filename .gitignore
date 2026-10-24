@@ -40,3 +40,9 @@ Thumbs.db
 # Etat local / config d'outils
 .scratch_bots.json
 forex/_cache/
+
+# Local tooling
+.claude/
+.superpowers/
+docs/superpowers/
+graphify-out/
