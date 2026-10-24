@@ -8,6 +8,16 @@ Une plateforme de recherche et de **paper trading** forex : une bibliothèque de
 
 > **Aucun argent réel n'est jamais en jeu.** Les prix viennent d'un feed public (yfinance), il n'y a aucune intégration de broker et chaque exécution est calculée localement. C'est un projet d'ingénierie et de recherche, pas un conseil financier.
 
+## Captures d'écran
+
+![Signaux en direct d'un bot](docs/screenshots/live-signals.png)
+
+*Signaux en direct d'un bot : chaque paire est évaluée, et ici le filtre temporel bloque les entrées car le marché est fermé pour le week-end.*
+
+![Validation par combinaison de signaux](docs/screenshots/validation-by-combination.png)
+
+*La barrière statistique à l'œuvre sur plus de 4 000 trades historiques : chaque combinaison reçoit un verdict (« perdant significatif », « non concluant »). Une combinaison qui ne passe pas n'est pas promue — c'est le but de la chaîne de validation.*
+
 ## Architecture en un coup d'œil
 
 ```mermaid

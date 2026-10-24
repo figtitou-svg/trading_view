@@ -8,6 +8,16 @@ A research and **paper-trading** platform for forex: a library of rule-based bot
 
 > **No real money is ever involved.** Prices come from a public feed (yfinance), there is no broker integration and every fill is computed locally. This is an engineering and research project, not financial advice.
 
+## Screenshots
+
+![Live signals of a bot](docs/screenshots/live-signals.png)
+
+*Live signals for one bot: every pair is evaluated, and here the time filter blocks entries because the market is closed for the weekend.*
+
+![Validation by signal combination](docs/screenshots/validation-by-combination.png)
+
+*The statistical gate at work on 4,000+ historical trades: each combination gets a verdict ("perdant significatif" = significantly losing, "non concluant" = inconclusive). A combination that does not pass is not promoted — which is the point of the pipeline.*
+
 ## Architecture at a glance
 
 ```mermaid
