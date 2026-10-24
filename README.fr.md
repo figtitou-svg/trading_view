@@ -2,7 +2,7 @@
 
 *[English version](README.md)*
 
-![python](https://img.shields.io/badge/python-3-3776AB?logo=python&logoColor=white) ![API](https://img.shields.io/badge/API-FastAPI-009688?logo=fastapi&logoColor=white) ![mode](https://img.shields.io/badge/mode-paper_trading_only-orange) ![validation](https://img.shields.io/badge/validation-walk--forward-blueviolet)
+[![CI](https://github.com/figtitou-svg/trading_view/actions/workflows/ci.yml/badge.svg)](https://github.com/figtitou-svg/trading_view/actions/workflows/ci.yml) ![License: MIT](https://img.shields.io/badge/license-MIT-green) ![python](https://img.shields.io/badge/python-3-3776AB?logo=python&logoColor=white) ![API](https://img.shields.io/badge/API-FastAPI-009688?logo=fastapi&logoColor=white) ![mode](https://img.shields.io/badge/mode-paper_trading_only-orange) ![validation](https://img.shields.io/badge/validation-walk--forward-blueviolet)
 
 Une plateforme de recherche et de **paper trading** forex : une bibliothèque de bots à règles, une chaîne de validation statistique (event study, walk-forward), une boucle d'auto-réglage hebdomadaire, un miroir de copy trading simulé et un dashboard web.
 
@@ -107,3 +107,7 @@ Voir [`docs/deployment.md`](docs/deployment.md) : unités systemd pour le runner
 ## Technologies
 
 Python · FastAPI · pandas · NumPy · SciPy · yfinance · pytest · systemd
+
+## Licence
+
+[MIT](LICENSE)
