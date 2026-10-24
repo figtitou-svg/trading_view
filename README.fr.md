@@ -2,9 +2,37 @@
 
 *[English version](README.md)*
 
+![python](https://img.shields.io/badge/python-3-3776AB?logo=python&logoColor=white) ![API](https://img.shields.io/badge/API-FastAPI-009688?logo=fastapi&logoColor=white) ![mode](https://img.shields.io/badge/mode-paper_trading_only-orange) ![validation](https://img.shields.io/badge/validation-walk--forward-blueviolet)
+
 Une plateforme de recherche et de **paper trading** forex : une bibliothèque de bots à règles, une chaîne de validation statistique (event study, walk-forward), une boucle d'auto-réglage hebdomadaire, un miroir de copy trading simulé et un dashboard web.
 
 > **Aucun argent réel n'est jamais en jeu.** Les prix viennent d'un feed public (yfinance), il n'y a aucune intégration de broker et chaque exécution est calculée localement. C'est un projet d'ingénierie et de recherche, pas un conseil financier.
+
+## Architecture en un coup d'œil
+
+```mermaid
+flowchart LR
+  P[Public prices and economic calendar] --> S1[Technical signal]
+  P --> S2[Fundamental surprise score]
+  P --> S3[Time filter]
+  S1 --> C{Confluence}
+  S2 --> C
+  S3 --> C
+  C --> R[Risk manager<br/>sizing, leverage caps, kill-switch]
+  R --> B[Simulated broker]
+  B --> J[Trade journal]
+  J --> L[Weekly learning loop<br/>walk-forward, guard-rails]
+  L -.-> C
+  B --> D[Dashboard API]
+```
+
+## Points forts techniques
+
+- **Pas de look-ahead par construction.** Le surprise score n'utilise que des annonces antérieures, et les paramètres ne sont jugés que hors échantillon (walk-forward).
+- **Une barrière statistique avant tout paper trading.** La confluence doit battre la technique seule, l'event study doit être significatif (t-test de Welch et bootstrap) et le walk-forward rester positif.
+- **Des bots en plug-in.** Un fichier dans `forex/strategies/` = un bot, découvert par un registre, livré avec un test isolé.
+- **Une boucle d'auto-réglage sous garde-fous.** Les paramètres ne bougent qu'après un cycle walk-forward et un échantillon minimum ; chaque changement est journalisé et réversible.
+- **Des coûts réalistes partout** (spread, slippage, swap, plafonds de levier ESMA) et 450+ tests. Aucun ordre réel n'est possible.
 
 ## Contenu
 

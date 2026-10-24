@@ -2,9 +2,37 @@
 
 *[Version française](README.fr.md)*
 
+![python](https://img.shields.io/badge/python-3-3776AB?logo=python&logoColor=white) ![API](https://img.shields.io/badge/API-FastAPI-009688?logo=fastapi&logoColor=white) ![mode](https://img.shields.io/badge/mode-paper_trading_only-orange) ![validation](https://img.shields.io/badge/validation-walk--forward-blueviolet)
+
 A research and **paper-trading** platform for forex: a library of rule-based bots, a statistical validation pipeline (event study, walk-forward), a weekly self-tuning loop, a simulated copy-trading mirror, and a web dashboard.
 
 > **No real money is ever involved.** Prices come from a public feed (yfinance), there is no broker integration and every fill is computed locally. This is an engineering and research project, not financial advice.
+
+## Architecture at a glance
+
+```mermaid
+flowchart LR
+  P[Public prices and economic calendar] --> S1[Technical signal]
+  P --> S2[Fundamental surprise score]
+  P --> S3[Time filter]
+  S1 --> C{Confluence}
+  S2 --> C
+  S3 --> C
+  C --> R[Risk manager<br/>sizing, leverage caps, kill-switch]
+  R --> B[Simulated broker]
+  B --> J[Trade journal]
+  J --> L[Weekly learning loop<br/>walk-forward, guard-rails]
+  L -.-> C
+  B --> D[Dashboard API]
+```
+
+## Engineering highlights
+
+- **No look-ahead by construction.** The surprise score only uses earlier announcements, and parameters are only ever judged out of sample (walk-forward).
+- **A statistical gate before any paper trading.** Confluence must beat technical-only, the event study must be significant (Welch t-test and bootstrap), and walk-forward must stay positive.
+- **Plug-in bots.** One file in `forex/strategies/` is one bot, auto-discovered by a registry, each shipped with an isolated test.
+- **A self-tuning loop with guard-rails.** Parameters move only after a walk-forward cycle and a minimum sample; every change is logged and reversible.
+- **Realistic costs everywhere** (spread, slippage, overnight swap, ESMA leverage caps) and 450+ tests. No real order can ever be placed.
 
 ## What is in it
 
